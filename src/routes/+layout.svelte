@@ -12,8 +12,6 @@
         {/if}
     </div>
 
-
-    
     <main>
         <slot/>
     </main>
