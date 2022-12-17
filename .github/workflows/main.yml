@@ -1,0 +1,15 @@
+on:
+  pull_request:
+    branches:
+      - '**'
+jobs:
+  test:
+    name: integration tests
+    runs-on: ubuntu-18.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: npm install, test
+      run: |
+        cd test
+        npm install
+        npm run test
