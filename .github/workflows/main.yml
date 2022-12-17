@@ -8,8 +8,8 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v1
-    - name: npm install, test
-      run: |
-        npm install
-        npx playwright install
-        npm run test
+    - name: npm install
+      run: npm install
+      
+    - name: test
+      run: npm run test
