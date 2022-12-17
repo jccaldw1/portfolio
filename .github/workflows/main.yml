@@ -1,0 +1,17 @@
+on:
+  pull_request:
+    branches:
+      - '**'
+jobs:
+  test:
+    name: integration tests
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: npm install
+      run: | 
+        npm install
+        npx playwright install
+      
+    - name: test
+      run: npm run test
