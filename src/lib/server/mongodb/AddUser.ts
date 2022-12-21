@@ -1,19 +1,8 @@
 import { MongoClient } from "mongodb";
 import { DB_URI } from "$lib/secrets";
 import * as bcrypt from "bcrypt";
+import { User } from "../authentication-model/User";
 const client = new MongoClient(DB_URI)
-
-// TODO: standardize all documents to be User documents.
-class User {
-    public username!: string;
-    public hashedpassword!: string;
-    public sessionCookie: string | undefined;
-    public sessionCookieGrantTime: string | undefined;
-
-    public constructor(init?: Partial<User>) {
-        Object.assign(this, init);
-    }
-}
 
 async function AddBasicUser(username: string, password: string) {
     await client.connect();
