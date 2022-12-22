@@ -1,5 +1,4 @@
 import { MongoClient } from "mongodb";
-import { DB_URI } from "$lib/secrets";
 import * as bcrypt from "bcrypt";
 import User from "../authentication-model/User";
 import Session from "../authentication-model/Session";
