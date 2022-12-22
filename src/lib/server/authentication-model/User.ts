@@ -1,8 +1,9 @@
-export class User {
+import type Session from "./Session";
+
+export default class User {
     public username!: string;
     public hashedpassword!: string;
-    public sessionCookie: string | undefined;
-    public sessionCookieGrantTime: string | undefined;
+    public session: Session | undefined;
 
     public constructor(init?: Partial<User>) {
         Object.assign(this, init);
