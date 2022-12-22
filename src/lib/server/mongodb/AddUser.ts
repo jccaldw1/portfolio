@@ -3,7 +3,8 @@ import * as bcrypt from "bcrypt";
 import User from "../authentication-model/User";
 import Session from "../authentication-model/Session";
 import * as uuid from "uuid";
-const client = new MongoClient(process.env.mongo_db_uri);
+import { MONGO_DB_URI } from "$lib/secrets";
+const client = new MongoClient(MONGO_DB_URI);
 
 async function AddBasicUser(username: string, password: string) {
 	await client.connect();
