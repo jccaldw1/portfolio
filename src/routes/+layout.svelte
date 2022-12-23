@@ -1,15 +1,16 @@
 <script>
     import { page } from '$app/stores'
+    import { routes } from "$lib/route-configuration";
 </script>
 
 <div class="app">
     <div>
-        <p>
-            This is a header.
-        </p>
         {#if $page.route.id !== "/"}
             <a href="/">Go home.</a>
         {/if}
+        {#each routes as route}
+            <a href="/{route}">{route}</a>
+        {/each}
     </div>
 
     <main>
