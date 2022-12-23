@@ -18,6 +18,8 @@ test('make sure all pages in route configuration are accessible', async ({page})
 
 //TODO: test that adds and removes a user to/from the database to verify db connection works.
 test('verify db connection is good', async () => {
+	console.log(`mongo: ${MONGO_DB_URI}`);
+
 	const client = new MongoClient(MONGO_DB_URI);
 
 	await client.connect();
