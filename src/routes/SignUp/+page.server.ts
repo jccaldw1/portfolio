@@ -15,6 +15,6 @@ export const actions = {
         let user = formdata.get('username')?.toString();
         let pass = formdata.get('password')?.toString();
         if (user !== undefined && pass !== undefined)
-            await AuthenticateUser("jacob4", "jacob4");
+            await AuthenticateUser(user, pass);
     }
 };
