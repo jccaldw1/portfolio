@@ -15,7 +15,7 @@ jobs:
     
     - name: get mongo token
       run: |
-        npm i vercel@latest
+        npm install -g vercel@latest
         vercel env pull --token=${{secrets.VERCEL_TOKEN}}
         MONGO_TOKEN=`cat .env | grep mongo_db_uri | awk -F '"' '{print $2}'`
 
