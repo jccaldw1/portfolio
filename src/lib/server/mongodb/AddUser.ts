@@ -3,7 +3,7 @@ import * as bcrypt from "bcrypt";
 import { randomUUID } from "crypto"
 import User from "../authentication-model/User";
 import Session from "../authentication-model/Session";
-import { MONGO_DB_URI } from "$lib/secrets";
+import { MONGO_DB_URI } from "$lib/server/secrets";
 
 const client = new MongoClient(MONGO_DB_URI);
 
@@ -51,24 +51,7 @@ async function AuthenticateUser(username: string, plainTextPassword: string) {
 			return;
 		}
 
-		const sessionToAdd = new Session({
-			sessionCookie: randomUUID(),
-			sessionGrantTime: new Date(),
-			sessionGoodDuration: 1000
-		});
 
-		const sessionUpdate = {
-			$set: {
-				session: sessionToAdd
-			}
-		};
-
-		// add session token
-		await users.updateOne(query, sessionUpdate);
-
-		// make record of session
-		let sessions = database.collection<Session>('Sessions');
-		await sessions.insertOne(sessionToAdd);
 	}
 }
 
