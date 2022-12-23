@@ -22,9 +22,9 @@ jobs:
         vercel link -y --token=${{secrets.VERCEL_TOKEN}} -p portfolio
         vercel env pull --token=${{secrets.VERCEL_TOKEN}} "./vercel_envs"
         echo "MONGO_TOKEN=$(cat './vercel_envs' | grep mongo_db_uri | cut -d '"' -f2)" >> $GITHUB_ENV
-        echo {{env.MONGO_TOKEN}}
+        echo ${{env.MONGO_TOKEN}}
 
     - name: test
       run: |
         echo $MONGO_TOKEN
-        npm run test --mongo_db_uri={{env.MONGO_TOKEN}}
+        npm run test --mongo_db_uri=${{env.MONGO_TOKEN}}
