@@ -1,9 +1,10 @@
 import { MongoClient } from "mongodb";
 import * as bcrypt from "bcrypt";
+import { randomUUID } from "crypto"
 import User from "../authentication-model/User";
 import Session from "../authentication-model/Session";
-import * as uuid from "uuid";
 import { MONGO_DB_URI } from "$lib/secrets";
+
 const client = new MongoClient(MONGO_DB_URI);
 
 async function AddBasicUser(username: string, password: string) {
@@ -43,9 +44,15 @@ async function AuthenticateUser(username: string, plainTextPassword: string) {
 
 	if (userInDatabase !== null) {
 		let userAuthResult = await bcrypt.compare(plainTextPassword, userInDatabase.hashedpassword);
-		
+
+		if (!userAuthResult) {
+			// Send back error response
+			// exit
+			return;
+		}
+
 		const sessionToAdd = new Session({
-			sessionCookie: "jfdklsjf;aljg;lhas;dnglbjknsad",
+			sessionCookie: randomUUID(),
 			sessionGrantTime: new Date(),
 			sessionGoodDuration: 1000
 		});
@@ -54,11 +61,12 @@ async function AuthenticateUser(username: string, plainTextPassword: string) {
 			$set: {
 				session: sessionToAdd
 			}
-		}
+		};
 
 		// add session token
 		await users.updateOne(query, sessionUpdate);
 
+		// make record of session
 		let sessions = database.collection<Session>('Sessions');
 		await sessions.insertOne(sessionToAdd);
 	}
