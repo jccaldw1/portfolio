@@ -18,7 +18,7 @@ jobs:
         npm install -g vercel@latest
         vercel link -y --token=${{secrets.VERCEL_TOKEN}} -p portfolio
         vercel env pull --token=${{secrets.VERCEL_TOKEN}} "./vercel_envs"
-        cat './vercel_envs' | grep mongo_db_uri | cut -d '"' -f2
+        cat './vercel_envs' | grep mongo_db_uri | cut -d\" -f2
         echo "MONGO_TOKEN=$(cat './vercel_envs' | grep mongo_db_uri | cut -d '\"' -f2)"
         echo $MONGO_TOKEN
 
