@@ -5,7 +5,7 @@ on:
 jobs:
   test:
     name: integration tests
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
     - name: npm install
@@ -18,7 +18,7 @@ jobs:
         npm install -g vercel@latest
         vercel link -y --token=${{secrets.VERCEL_TOKEN}} -p portfolio
         vercel env pull --token=${{secrets.VERCEL_TOKEN}} "./vercel_envs"
-        echo "MONGO_TOKEN=$(cat './vercel_envs' | grep mongo_db_uri | tr '\"' '#')"
+        echo "MONGO_TOKEN=$(cat './vercel_envs' | grep mongo_db_uri | cut -d '"' -f2)"
         echo $MONGO_TOKEN
 
     - name: test
