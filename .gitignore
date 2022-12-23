@@ -11,3 +11,4 @@ vite.config.ts.timestamp-*
 
 package-lock.json
 localvars.ts
+.vercel

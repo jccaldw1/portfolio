@@ -12,6 +12,16 @@ jobs:
       run: | 
         npm install
         npx playwright install
+    
+    - name: vercel install
+      run: |
+        npm i vercel@latest
       
+    - name: get mongo token
+      run: |
+        vercel env pull --token=${{secrets.VERCEL_TOKEN}}
+        MONGO_TOKEN=`cat .env | grep mongo_db_uri | awk -F '"' '{print $2}'`
+
+
     - name: test
-      run: npm run test
+      run: npm run test --mongo_db_uri=$MONGO_TOKEN
