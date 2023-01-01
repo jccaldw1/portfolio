@@ -21,4 +21,10 @@
         </label>
         <button>Authenticate</button>
     </form>
+    <!-- <form method="POST" action="?/AddRandomCookie">
+        <button>add rnadom cookie</button>
+    </form> -->
+    <form method="POST" action="?/VerifyAuthentication">
+        <button>verify authentication</button>
+    </form>
 </div>

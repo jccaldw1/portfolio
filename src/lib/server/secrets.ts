@@ -9,4 +9,6 @@ if (env === "deployment") {
     MONGO_DB_URI = process.env.npm_config_mongo_db_uri;
 }
 
-export { MONGO_DB_URI };
+let jwtSignature: string = "jacobcaldwellisthecoolest:):):)";
+
+export { MONGO_DB_URI, jwtSignature as jwtSecret };
