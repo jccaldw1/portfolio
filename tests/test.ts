@@ -1,9 +1,8 @@
 import { routes } from '$lib/route-configuration';
 import { expect, test } from '@playwright/test';
-import { MONGO_DB_URI } from '$lib/secrets';
+import { MONGO_DB_URI } from '$lib/server/secrets';
 import { MongoClient } from 'mongodb';
 import User from '$lib/server/authentication-model/User';
-import { sortUserPlugins } from 'vite';
 
 test('make sure all pages in route configuration are accessible', async ({page}) => {
 	// This cannot be done in <array>.forEach(async () => {}), possibly because of async function wrapped in an async function.

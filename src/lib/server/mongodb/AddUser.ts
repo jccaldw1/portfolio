@@ -1,9 +1,9 @@
 import { MongoClient } from "mongodb";
 import * as bcrypt from "bcrypt";
-import { randomUUID } from "crypto"
 import User from "../authentication-model/User";
-import Session from "../authentication-model/Session";
-import { MONGO_DB_URI } from "$lib/secrets";
+import { jwtSecret as jwtSecret, MONGO_DB_URI } from "$lib/server/secrets";
+import base64url from "base64url";
+import * as jwt from "jsonwebtoken";
 
 const client = new MongoClient(MONGO_DB_URI);
 
@@ -34,7 +34,7 @@ async function AddBasicUser(username: string, password: string) {
 	});
 }
 
-async function AuthenticateUser(username: string, plainTextPassword: string) {
+async function AuthenticateUser(username: string, plainTextPassword: string): Promise<boolean> {
 	await client.connect();
 	let database = client.db('Users');
 	let users = database.collection<User>('Users');
@@ -48,32 +48,50 @@ async function AuthenticateUser(username: string, plainTextPassword: string) {
 		if (!userAuthResult) {
 			// Send back error response
 			// exit
-			return;
+			return false;
 		}
-
-		const sessionToAdd = new Session({
-			sessionCookie: randomUUID(),
-			sessionGrantTime: new Date(),
-			sessionGoodDuration: 1000
-		});
-
-		const sessionUpdate = {
-			$set: {
-				session: sessionToAdd
-			}
-		};
-
-		// add session token
-		await users.updateOne(query, sessionUpdate);
-
-		// make record of session
-		let sessions = database.collection<Session>('Sessions');
-		await sessions.insertOne(sessionToAdd);
 	}
+
+	return true;
 }
 
-async function AddUserWithCustomRoles() {
-	throw new Error("nto implemented");
+async function CreateSignedJwtToken(username: string): Promise<string> {
+	let jwtHeader: object = {
+		"alg": "HS256",
+		"typ": "jwt"
+	};
+
+	let jwtPayload: object = {
+		"username": username,
+		"admin": false
+	};
+
+	let encodedJwtHeader = base64url(JSON.stringify(jwtHeader));
+	let encodedJwtPayload = base64url(JSON.stringify(jwtPayload));
+	let encodedToken = `${encodedJwtHeader}.${encodedJwtPayload}`
+
+	let signedToken = jwt.sign(encodedToken, jwtSecret);
+
+	return signedToken;
 }
 
-export { AddBasicUser, AuthenticateUser }
+async function VerifyJwtToken(jwtToken: string): Promise<boolean> {
+	let jwtTokenBody;
+	try {
+		jwtTokenBody = jwt.verify(jwtToken, jwtSecret);
+	} catch (e) {
+		if (e instanceof jwt.JsonWebTokenError) {
+			// log attack
+		} else {
+			// log error
+		}
+		return false;
+	}
+
+	// If there was no error, the token was handed out by the server.
+	// TODO: add more criteria - how long since the token was handed out, verify jwt body matches, etc.
+	return true;
+}
+
+export { AddBasicUser, AuthenticateUser, CreateSignedJwtToken, VerifyJwtToken }
+
