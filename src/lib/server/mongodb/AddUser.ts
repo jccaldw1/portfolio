@@ -68,7 +68,7 @@ async function CreateSignedJwtToken(username: string): Promise<string> {
 
 	let encodedJwtHeader = base64url(JSON.stringify(jwtHeader));
 	let encodedJwtPayload = base64url(JSON.stringify(jwtPayload));
-	let encodedToken = `${encodedJwtHeader}.${encodedJwtPayload}`
+	let encodedToken = `${encodedJwtHeader}.${encodedJwtPayload}`;
 
 	let signedToken = jwt.sign(encodedToken, jwtSecret);
 
@@ -82,8 +82,10 @@ async function VerifyJwtToken(jwtToken: string): Promise<boolean> {
 	} catch (e) {
 		if (e instanceof jwt.JsonWebTokenError) {
 			// log attack
+			console.log('attack');
 		} else {
 			// log error
+			console.log(`error: ${e}`);
 		}
 		return false;
 	}
