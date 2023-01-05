@@ -70,9 +70,6 @@ async function CreateSignedJwtToken(username: string): Promise<string> {
 	let encodedJwtPayload = base64url(JSON.stringify(jwtPayload));
 	let encodedToken = `${encodedJwtHeader}.${encodedJwtPayload}`
 
-	console.log(`encodedToken: ${encodedToken}`);
-	console.log(`jwtSecret: ${jwtSecret}`);
-
 	let signedToken = jwt.sign(encodedToken, jwtSecret);
 
 	return signedToken;
