@@ -79,6 +79,7 @@ async function VerifyJwtToken(jwtToken: string): Promise<boolean> {
 	let jwtTokenBody;
 	try {
 		jwtTokenBody = jwt.verify(jwtToken, jwtSecret);
+		console.log(`verify succeeds`);
 	} catch (e) {
 		if (e instanceof jwt.JsonWebTokenError) {
 			// log attack
