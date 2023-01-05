@@ -24,11 +24,11 @@ export const actions = {
         }
     },
     VerifyAuthentication: async(event: RequestEvent) => {
-        let userJwtToken = event.cookies.get('signed-token');
-        if (userJwtToken === undefined){
-            // user is not authenticated
-            return false;
-        }
+        let userJwtToken = event.cookies.get('signed-token') ?? ":)";
+        // if (userJwtToken === undefined){
+        //     // user is not authenticated
+        //     return false;
+        // }
         await VerifyJwtToken(userJwtToken);
         // user is authenticated
     }
