@@ -3,7 +3,8 @@ import * as bcrypt from "bcrypt";
 import User from "../authentication-model/User";
 import { jwtSecret as jwtSecret, MONGO_DB_URI } from "$lib/server/secrets";
 import base64url from "base64url";
-import { JsonWebTokenError, sign, verify } from "jsonwebtoken";
+import pkg from 'jsonwebtoken';
+const { JsonWebTokenError, sign, verify } = pkg;
 
 const client = new MongoClient(MONGO_DB_URI);
 
