@@ -3,7 +3,8 @@ import * as bcrypt from "bcrypt";
 import User from "../authentication-model/User";
 import { jwtSecret as jwtSecret, MONGO_DB_URI } from "$lib/server/secrets";
 import base64url from "base64url";
-import * as jwt from "jsonwebtoken";
+import "jsonwebtoken";
+import { JsonWebTokenError, sign, verify } from "jsonwebtoken";
 
 const client = new MongoClient(MONGO_DB_URI);
 
@@ -70,7 +71,7 @@ async function CreateSignedJwtToken(username: string): Promise<string> {
 	let encodedJwtPayload = base64url(JSON.stringify(jwtPayload));
 	let encodedToken = `${encodedJwtHeader}.${encodedJwtPayload}`;
 
-	let signedToken = jwt.sign(encodedToken, jwtSecret);
+	let signedToken = sign(encodedToken, jwtSecret);
 
 	return signedToken;
 }
@@ -78,10 +79,10 @@ async function CreateSignedJwtToken(username: string): Promise<string> {
 async function VerifyJwtToken(jwtToken: string): Promise<boolean> {
 	let jwtTokenBody;
 	try {
-		jwtTokenBody = jwt.verify(jwtToken, jwtSecret);
+		jwtTokenBody = verify(jwtToken, jwtSecret);
 		console.log(`verify succeeds`);
 	} catch (e) {
-		if (e instanceof jwt.JsonWebTokenError) {
+		if (e instanceof JsonWebTokenError) {
 			// log attack
 			console.log('attack');
 		} else {
