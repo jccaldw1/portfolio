@@ -3,7 +3,7 @@ import type { RequestEvent } from "./$types";
 
 /** @type {import('./$types').Actions} */
 export const actions = {
-    addNewUser: async (event: RequestEvent) => {
+    AddNewUser: async (event: RequestEvent) => {
         let formdata = await event.request.formData();
         let user = formdata.get('username')?.valueOf().toString();
         let pass = formdata.get('password')?.valueOf().toString();
@@ -24,7 +24,7 @@ export const actions = {
         }
     },
     VerifyAuthentication: async(event: RequestEvent) => {
-        let userJwtToken = event.cookies.get('signed-token') ?? ":)";
+        let userJwtToken: string | undefined = event.cookies.get('signed-token') ?? undefined;
         if (userJwtToken === undefined){
             // user is not authenticated
             return false;
