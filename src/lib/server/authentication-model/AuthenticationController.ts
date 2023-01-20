@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 import * as bcrypt from "bcrypt";
-import User from "../authentication-model/User";
+import User from "./User";
 import { jwtSecret as jwtSecret, MONGO_DB_URI } from "$lib/server/secrets";
 import base64url from "base64url";
 import pkg from 'jsonwebtoken';

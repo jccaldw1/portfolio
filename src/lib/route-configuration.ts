@@ -1,5 +1,6 @@
 export let routes: string[] = [
     "About",
     "Resume",
-    "SignUp"
+    "SignUp",
+    "Works"
 ];
