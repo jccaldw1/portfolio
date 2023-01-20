@@ -18,8 +18,9 @@
         <div align="right">
             <div class="grid">
                 {#each routes as route}
-                    <button><a href="/{route}">{route}</a></button>&emsp;
+                    <!-- <button><a href="/{route}">{route}</a></button>&emsp; -->
                     <!-- <button>{route}</button>&emsp; -->
+                    <a href="/{route}">{route}</a>&emsp;
                 {/each}
             </div>
         </div>
