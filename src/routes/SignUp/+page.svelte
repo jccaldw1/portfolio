@@ -1,6 +1,6 @@
 <div>
     <form method="POST" action="?/AddNewUser">
-        <div class="grid">
+        <div>
             <label>
                 Username
                 <input name="username" type="username" />
@@ -13,7 +13,7 @@
         </div>
     </form>
     <form method="POST" action="?/AuthenticateUser">
-        <div class="grid">
+        <div>
             <label>
                 Username
                 <input name="username" type="username" />
