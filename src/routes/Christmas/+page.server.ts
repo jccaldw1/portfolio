@@ -5,7 +5,6 @@ import type { RequestEvent } from "./$types";
 export const actions = {
     AddChristmasPresent: async (event: RequestEvent) => {
         let formdata = await event.request.formData();
-        let name: string | undefined = formdata.get('name')?.toString();
         let gift: string | undefined = formdata.get('gift')?.toString();
         if (name !== undefined && gift !== undefined)
             await AddChristmasItem(gift, name);

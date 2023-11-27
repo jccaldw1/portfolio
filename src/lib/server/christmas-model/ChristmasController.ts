@@ -1,5 +1,5 @@
 import { MongoClient, Db, type InsertOneResult } from "mongodb";
-import { MONGO_DB_URI } from "$env/static/private";
+import { MONGO_DB_URI } from "$lib/server/secrets";
 import ChristmasPresent from "./ChristmasPresent";
 
 const client = new MongoClient(MONGO_DB_URI)
