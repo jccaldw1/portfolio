@@ -5,8 +5,9 @@ import type { RequestEvent } from "./$types";
 export const actions = {
     AddChristmasPresent: async (event: RequestEvent) => {
         let formdata = await event.request.formData();
+        let nameId: string | undefined = event.cookies.get('nameId')?.toString()
         let gift: string | undefined = formdata.get('gift')?.toString();
-        if (name !== undefined && gift !== undefined)
-            await AddChristmasItem(gift, name);
+        if (nameId !== undefined && gift !== undefined)
+            await AddChristmasItem(gift, nameId);
     }
 }

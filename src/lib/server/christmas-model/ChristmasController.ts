@@ -1,13 +1,20 @@
 import { MongoClient, Db, type InsertOneResult } from "mongodb";
 import { MONGO_DB_URI } from "$lib/server/secrets";
 import ChristmasPresent from "./ChristmasPresent";
+import type ChristmasPassword from "./ChristmasPassword";
 
 const client = new MongoClient(MONGO_DB_URI)
 
-async function AddChristmasItem(gift: string, name: string) {
+async function AddChristmasItem(gift: string, nameId: string) {
     await client.connect();
     let database: Db = client.db('Users');
     let christmasPresents = database.collection<ChristmasPresent>('Christmas Presents')
+
+    const query = {_id: nameId}
+
+    let christmasUser = await database.collection<ChristmasPassword>('Christmas Passwords').findOne<ChristmasPassword>(query);
+
+    const name = christmasUser?.name;
 
     let insertOneResult: InsertOneResult<ChristmasPresent> = await christmasPresents.insertOne(new ChristmasPresent({
         name: name,
