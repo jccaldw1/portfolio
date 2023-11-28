@@ -80,4 +80,20 @@ async function ChangeGottenStatus(name: string, gift: string, newGottenStatus: b
     return result
 }
 
-export { GetChristmasPresentsForName, GetChristmasPresentsNameCanGet, AddChristmasItem }
+async function AuthenticateChristmasUser(password: string) {
+    await client.connect();
+    let database: Db = client.db('Users');
+    let christmasPasswords = database.collection<ChristmasPassword>('Christmas Passwords');
+
+    const query = {password: password};
+
+    const passwordQueryResult = await christmasPasswords.findOne(query);
+
+    if (passwordQueryResult === null) {
+        return false;
+    } else {
+        return passwordQueryResult._id;
+    }
+}
+
+export { GetChristmasPresentsForName, GetChristmasPresentsNameCanGet, AddChristmasItem, AuthenticateChristmasUser, ChangeGottenStatus }
