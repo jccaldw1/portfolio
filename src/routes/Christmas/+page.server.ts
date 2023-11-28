@@ -1,4 +1,4 @@
-import { AddChristmasItem, GetChristmasPresentsForName, GetChristmasPresentsNameCanGet } from "$lib/server/christmas-model/ChristmasController";
+import { AddChristmasItem, ChangeGottenStatus, GetChristmasPresentsForName, GetChristmasPresentsNameCanGet } from "$lib/server/christmas-model/ChristmasController";
 import type { RequestEvent } from "./$types";
 
 /** @type {import('./$types').Actions} */

@@ -1,11 +1,11 @@
+<script>
+    import {onMount} from 'svelte';
+
+    onMount(async () => {
+        console.log("destroy the world")
+    })
+</script>
+
 <div>
-    <form method="POST" action="?/AddChristmasPresent">
-        <div class="grid">
-            <label>
-                Gift
-                <input name="gift"/>
-            </label>
-            <button>+</button>
-        </div>
-    </form>
+    Christmas page
 </div>
