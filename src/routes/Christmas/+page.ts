@@ -21,9 +21,6 @@ export const actions = {
             let id = await AuthenticateChristmasUser(password)
             if (id !== null) {
                 event.cookies.set('id', id.toString());
-                let username = await GetChristmasUserGivenId(id.toString());
-                if (username !== undefined)
-                    event.locals.username = username
             }
         }
     }

@@ -1,11 +1,15 @@
-<script>
-    import {onMount} from 'svelte';
+<script lang="ts">
+    import Unauthenticated from './Unauthenticated.svelte';
+    import ChristmasList from './ChristmasList.svelte';
+    import type { PageData } from './$types';
 
-    onMount(async () => {
-        console.log("destroy the world")
-    })
+    let data: PageData
 </script>
 
 <div>
-    Christmas page
+    {#if data && data.username}
+        <ChristmasList userName={data.username}/>
+    {:else}
+        <Unauthenticated/>
+    {/if}
 </div>

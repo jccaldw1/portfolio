@@ -1,5 +1,6 @@
 import { MongoClient, Db, type InsertOneResult } from "mongodb";
 import { MONGO_DB_URI } from "$lib/server/secrets";
+import { ObjectId } from "mongodb";
 import ChristmasPresent from "./ChristmasPresent";
 import type ChristmasPassword from "./ChristmasPassword";
 
@@ -10,7 +11,7 @@ async function AddChristmasItem(gift: string, nameId: string) {
     let database: Db = client.db('Users');
     let christmasPresents = database.collection<ChristmasPresent>('Christmas Presents')
 
-    const query = {_id: nameId}
+    const query = {_id: new ObjectId(nameId)}
 
     let christmasUser = await database.collection<ChristmasPassword>('Christmas Passwords').findOne<ChristmasPassword>(query);
 
@@ -87,13 +88,29 @@ async function AuthenticateChristmasUser(password: string) {
 
     const query = {password: password};
 
-    const passwordQueryResult = await christmasPasswords.findOne(query);
+    const passwordQueryResult: ChristmasPassword | null = await christmasPasswords.findOne(query);
 
     if (passwordQueryResult === null) {
-        return false;
+        return null;
     } else {
         return passwordQueryResult._id;
     }
 }
 
-export { GetChristmasPresentsForName, GetChristmasPresentsNameCanGet, AddChristmasItem, AuthenticateChristmasUser, ChangeGottenStatus }
+async function GetChristmasUserGivenId(id: string) {
+    await client.connect();
+    let database: Db = client.db('Users');
+    let christmasPasswords = database.collection<ChristmasPassword>('Christmas Passwords');
+
+    const query = {_id: new ObjectId(id)};
+
+    const userQueryResult: ChristmasPassword | null = await christmasPasswords.findOne(query)
+
+    if (userQueryResult === null) {
+        return undefined;
+    } else {
+        return userQueryResult.name;
+    }
+}
+
+export { GetChristmasPresentsForName, GetChristmasUserGivenId, GetChristmasPresentsNameCanGet, AddChristmasItem, AuthenticateChristmasUser, ChangeGottenStatus }
