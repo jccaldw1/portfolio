@@ -1,8 +1,23 @@
-import { AddChristmasItem, AuthenticateChristmasUser, GetChristmasUserGivenId } from "$lib/server/christmas-model/ChristmasController";
+import { AddChristmasItem, AuthenticateChristmasUser, GetChristmasUserGivenId, GetChristmasPresentsForName, GetChristmasPresentsNameCanGet } from "$lib/server/christmas-model/ChristmasController";
 import type { RequestEvent } from "./$types";
 
-export const load = ({locals}) => {
-    return {username: locals.username}
+export const load = async ({locals}) => {
+    let gifts;
+    let returnObject;
+    if (locals.username !== undefined) {
+        gifts = await GetChristmasPresentsForName(locals.username);
+    }
+    if (gifts !== undefined){
+        returnObject = {
+            username: locals.username,
+            gifts: gifts
+        }
+    } else {
+        returnObject = {
+            username: locals.username
+        }
+    }
+    return returnObject;
 };
 
 /** @type {import('./$types').Actions} */

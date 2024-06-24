@@ -54,11 +54,12 @@ async function GetChristmasPresentsForName(name: string){
     let database: Db = client.db('Users');
     let christmasPresents = database.collection<ChristmasPresent>('Christmas Presents')
 
-    const query = {name: name}
+    console.log(`querying name: ${name}`)
+    const query = {recipient: name}
 
-    let presents = await christmasPresents.find<ChristmasPresent[]>(query).project({name: 1, gift: 1})
+    let presents = await christmasPresents.find<ChristmasPresent[]>(query);
 
-    return presents
+    return presents;
 }
 
 async function ChangeGottenStatus(name: string, gift: string, newGottenStatus: boolean) {
