@@ -3,13 +3,13 @@
     import ChristmasList from './ChristmasList.svelte';
     import type { PageData } from './$types';
 
-    let data: PageData
+    export let data: PageData
 </script>
 
 <div>
-    {#if data && data.username}
-        <ChristmasList userName={data.username}/>
-    {:else}
+    {#if !data || !data.username}
         <Unauthenticated/>
+    {:else}
+        <ChristmasList userName={data.username}/>
     {/if}
 </div>
