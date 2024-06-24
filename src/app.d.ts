@@ -4,10 +4,10 @@
 declare namespace App {
 	// interface Error {}
 	interface Locals {
-		username: string;
+		username: string | undefined;
 	}
-	interface PageData {
-		username: string;
-	}
+	// interface PageData {
+	// 	username: string;
+	// }
 	// interface Platform {}
 }
