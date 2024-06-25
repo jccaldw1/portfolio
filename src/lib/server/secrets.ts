@@ -4,9 +4,9 @@ let env = process.env.npm_config_env || "deployment";
 let MONGO_DB_URI: string;
 
 if (env === "deployment") {
-    MONGO_DB_URI = process.env.npm_config_mongo_db_uri;
+    MONGO_DB_URI = process.env.npm_config_mongo_db_uri || "";
 } else {
-    MONGO_DB_URI = process.env.npm_config_mongo_db_uri;
+    MONGO_DB_URI = process.env.npm_config_mongo_db_uri || "";
 }
 
 let jwtSignature: string = "jacobcaldwellisthecoolest:):):)";

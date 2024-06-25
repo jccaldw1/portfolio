@@ -13,12 +13,12 @@
         <div class="grid">
             <!-- logo -->
             <div />
-            <div align="left">
+            <div class="align-left">
                 {#if $page.route.id !== "/"}
                     <a role="button" class="outline" href="/">Go home.</a>
                 {/if}
             </div>
-            <div align="right">
+            <div class="align-right">
                 <div class="grid">
                     {#each routes as route}
                         <!-- <button><a href="/{route}">{route}</a></button>&emsp; -->
