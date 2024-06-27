@@ -5,9 +5,10 @@ export const load = async ({locals}) => {
     let gifts;
     let returnObject;
     if (locals.username !== undefined) {
-        gifts = await GetChristmasPresentsForName(locals.username);
+        gifts = (await GetChristmasPresentsForName(locals.username)).map(({_id, ...keepAttrs}) => keepAttrs);
+        console.log(gifts)
     }
-    if (gifts !== undefined){
+    if (gifts !== undefined) {
         returnObject = {
             username: locals.username,
             gifts: gifts

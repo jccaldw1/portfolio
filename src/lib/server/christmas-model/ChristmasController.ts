@@ -57,9 +57,10 @@ async function GetChristmasPresentsForName(name: string){
     console.log(`querying name: ${name}`)
     const query = {recipient: name}
 
-    let presents = await christmasPresents.find<ChristmasPresent[]>(query);
+    let presents = await christmasPresents.find<ChristmasPresent>(query);
+    let presentsArray = await presents.toArray()
 
-    return presents;
+    return presentsArray;
 }
 
 async function ChangeGottenStatus(name: string, gift: string, newGottenStatus: boolean) {
