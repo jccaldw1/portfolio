@@ -1,5 +1,5 @@
 // Env can take the value "deployment" or "local". If the env is local, get the env variables from the command line parameters. Otherwise, get them from deployment env vars.
-let env = process.env.npm_config_env || "deployment";
+let env = process.env.npm_config_env || "test";
 
 let MONGO_DB_URI: string;
 
